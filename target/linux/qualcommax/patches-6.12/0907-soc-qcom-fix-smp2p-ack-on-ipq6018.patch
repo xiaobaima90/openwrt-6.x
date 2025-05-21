@@ -15,7 +15,11 @@ Signed-off-by: Mantas Pucka <mantas@8devices.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+<<<<<<<< HEAD:target/linux/qualcommax/patches-6.12/0907-soc-qcom-fix-smp2p-ack-on-ipq6018.patch
 @@ -1186,6 +1186,7 @@
+========
+@@ -1166,6 +1166,7 @@
+>>>>>>>> imm/master:target/linux/qualcommax/patches-6.6/0907-soc-qcom-fix-smp2p-ack-on-ipq6018.patch
  
  		wcss_smp2p_out: master-kernel {
  			qcom,entry-name = "master-kernel";

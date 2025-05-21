@@ -15,7 +15,11 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+<<<<<<<< HEAD:target/linux/qualcommax/patches-6.12/0121-arm64-dts-ipq8074-Add-WLAN-node.patch
 @@ -1075,6 +1075,117 @@
+========
+@@ -1048,6 +1048,117 @@
+>>>>>>>> imm/master:target/linux/qualcommax/patches-6.6/0121-arm64-dts-ipq8074-Add-WLAN-node.patch
  				};
  			};
  		};
