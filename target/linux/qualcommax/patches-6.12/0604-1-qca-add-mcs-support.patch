@@ -1,8 +1,8 @@
 --- a/include/linux/if_bridge.h
 +++ b/include/linux/if_bridge.h
-@@ -254,4 +254,17 @@ typedef struct net_bridge_port *br_get_d
- extern br_get_dst_hook_t __rcu *br_get_dst_hook;
- /* QCA NSS ECM support - End */
+@@ -258,4 +258,17 @@ extern br_get_dst_hook_t __rcu *br_get_d
+ extern struct net_device *br_fdb_bridge_dev_get_and_hold(struct net_bridge *br);
+ /* QCA NSS bridge-mgr support - End */
  
 +/* QCA qca-mcs support - Start */
 +typedef struct net_bridge_port *br_get_dst_hook_t(const struct net_bridge_port *src,
