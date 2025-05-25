@@ -760,6 +760,33 @@
  	}
  #undef N
  	return "UNKNOWN_NETDEV_EVENT";
+@@ -12049,7 +12050,7 @@ static void __init net_dev_struct_check(
+ #ifdef CONFIG_NET_XGRESS
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_tx, tcx_egress);
+ #endif
+-	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_tx, 160);
++	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_tx, 192);
+ 
+ 	/* TXRX read-mostly hotpath */
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, lstats);
+@@ -12058,7 +12059,7 @@ static void __init net_dev_struct_check(
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, hard_header_len);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, features);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, ip6_ptr);
+-	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_txrx, 46);
++	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_txrx, 64);
+ 
+ 	/* RX read-mostly hotpath */
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_rx, ptype_specific);
+@@ -12078,7 +12079,7 @@ static void __init net_dev_struct_check(
+ #ifdef CONFIG_NET_XGRESS
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_rx, tcx_ingress);
+ #endif
+-	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_rx, 104);
++	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_rx, 128);
+ }
+ 
+ /*
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
 @@ -993,6 +993,7 @@ void inet6_ifa_finish_destroy(struct ine
