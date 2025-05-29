@@ -81,8 +81,8 @@
  		     __be16 vlan_proto, u16 vlan_id)
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -1690,6 +1690,36 @@ enum netdev_priv_flags {
- 	IFF_NO_IP_ALIGN			= BIT_ULL(32),
+@@ -613,6 +613,36 @@ enum netdev_queue_state_t {
+ 	__QUEUE_STATE_FROZEN,
  };
  
 +/**
@@ -115,9 +115,9 @@
 +	IFF_EXT_ETH_L2TPV3		= 1<<9,
 +};
 +
- /* Specifies the type of the struct net_device::ml_priv pointer */
- enum netdev_ml_priv_type {
- 	ML_PRIV_NONE,
+ #define QUEUE_STATE_DRV_XOFF	(1 << __QUEUE_STATE_DRV_XOFF)
+ #define QUEUE_STATE_STACK_XOFF	(1 << __QUEUE_STATE_STACK_XOFF)
+ #define QUEUE_STATE_FROZEN	(1 << __QUEUE_STATE_FROZEN)
 @@ -2026,6 +2056,7 @@ struct net_device {
  		unsigned long		priv_flags:32;
  		unsigned long		lltx:1;
@@ -760,33 +760,6 @@
  	}
  #undef N
  	return "UNKNOWN_NETDEV_EVENT";
-@@ -12049,7 +12050,7 @@ static void __init net_dev_struct_check(
- #ifdef CONFIG_NET_XGRESS
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_tx, tcx_egress);
- #endif
--	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_tx, 160);
-+	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_tx, 192);
- 
- 	/* TXRX read-mostly hotpath */
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, lstats);
-@@ -12058,7 +12059,7 @@ static void __init net_dev_struct_check(
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, hard_header_len);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, features);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_txrx, ip6_ptr);
--	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_txrx, 46);
-+	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_txrx, 64);
- 
- 	/* RX read-mostly hotpath */
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_rx, ptype_specific);
-@@ -12078,7 +12079,7 @@ static void __init net_dev_struct_check(
- #ifdef CONFIG_NET_XGRESS
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct net_device, net_device_read_rx, tcx_ingress);
- #endif
--	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_rx, 104);
-+	CACHELINE_ASSERT_GROUP_SIZE(struct net_device, net_device_read_rx, 128);
- }
- 
- /*
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
 @@ -993,6 +993,7 @@ void inet6_ifa_finish_destroy(struct ine
@@ -985,11 +958,11 @@
  
 --- a/drivers/net/tun.c
 +++ b/drivers/net/tun.c
-@@ -994,6 +994,7 @@ static int tun_net_init(struct net_devic
- 	dev->vlan_features = dev->features &
+@@ -995,6 +995,7 @@ static int tun_net_init(struct net_devic
  			     ~(NETIF_F_HW_VLAN_CTAG_TX |
  			       NETIF_F_HW_VLAN_STAG_TX);
-+	dev->priv_flags_ext |= IFF_EXT_TUN_TAP;
  	dev->lltx = true;
++	dev->priv_flags_ext |= IFF_EXT_TUN_TAP;
  
  	tun->flags = (tun->flags & ~TUN_FEATURES) |
+ 		      (ifr->ifr_flags & TUN_FEATURES);
