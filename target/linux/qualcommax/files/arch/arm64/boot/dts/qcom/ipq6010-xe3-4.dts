@@ -223,27 +223,21 @@
 };
 
 &blsp1_spi1 {
-	pinctrl-0 = <&spi_0_pins>;
-	pinctrl-names = "default";
 	status = "okay";
 
+	pinctrl-0 = <&spi_0_pins>;
+	pinctrl-names = "default";
+
 	flash@0 {
+		compatible = "micron,n25q128a11", "jedec,spi-nor";
+		linux,modalias = "m25p80", "mx30uf2g18ac", "n25q128a11";
+		spi-max-frequency = <50000000>;
 		#address-cells = <1>;
 		#size-cells = <1>;
 		reg = <0>;
-		/*
-		 * U-boot looks for "n25q128a11" node,
-		 * if we don't have it, it will spit out the following warning:
-		 * "ipq: fdt fixup unable to find compatible node".
-		 */
-		linux,modalias = "m25p80", "mx30uf2g18ac", "n25q128a11";
-		compatible = "micron,n25q128a11", "jedec,spi-nor";
-		spi-max-frequency = <50000000>;
 
 		partitions {
 			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
 
 			partition@0 {
 				label = "0:SBL1";
@@ -367,6 +361,8 @@
 	status = "okay";
 
 	nand@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
 		reg = <0>;
 		nand-ecc-strength = <4>;
 		nand-ecc-step-size = <512>;
@@ -374,8 +370,6 @@
 
 		partitions {
 			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
 
 			partition@0 {
 				label = "rootfs";

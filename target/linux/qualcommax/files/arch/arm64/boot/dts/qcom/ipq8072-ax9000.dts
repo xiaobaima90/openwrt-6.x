@@ -128,30 +128,21 @@
 &qpic_nand {
 	status = "okay";
 
-	/*
-	 * Bootloader will find the NAND DT node by the compatible and
-	 * then "fixup" it by adding the partitions from the SMEM table
-	 * using the legacy bindings thus making it impossible for us
-	 * to change the partition table or utilize NVMEM for calibration.
-	 * So add a dummy partitions node that bootloader will populate
-	 * and set it as disabled so the kernel ignores it instead of
-	 * printing warnings due to the broken way bootloader adds the
-	 * partitions.
-	 */
 	partitions {
 		status = "disabled";
 	};
 
 	nand@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
 		reg = <0>;
+
 		nand-ecc-strength = <4>;
 		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
 
 		partitions {
 			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
 
 			partition@0 {
 				label = "0:sbl1";
@@ -261,8 +252,6 @@
 
 				nvmem-layout {
 					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
 
 					macaddr_dp1: macaddr@0 {
 						reg = <0x0 0x6>;
@@ -296,7 +285,6 @@
 			};
 
 			partition@1080000 {
-				/* This is crash + crash_syslog parts combined */
 				label = "pstore";
 				reg = <0x1080000 0x100000>;
 			};

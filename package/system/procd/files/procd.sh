@@ -188,11 +188,12 @@ _procd_add_jail() {
 	json_add_string name "$1"
 
 	shift
-	
+
 	for a in $@; do
 		case $a in
 		log)	json_add_boolean "log" "1";;
 		ubus)	json_add_boolean "ubus" "1";;
+		udebug)	json_add_boolean "udebug" "1";;
 		procfs)	json_add_boolean "procfs" "1";;
 		sysfs)	json_add_boolean "sysfs" "1";;
 		ronly)	json_add_boolean "ronly" "1";;

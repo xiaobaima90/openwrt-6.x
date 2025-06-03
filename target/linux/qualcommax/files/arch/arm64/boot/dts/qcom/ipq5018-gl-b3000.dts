@@ -23,8 +23,8 @@
 	};
 
 	chosen {
-		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1 coherent_pool=2M";
 		stdout-path = "serial0:115200n8";
+		bootargs-append = " root=/dev/ubiblock0_1";
 	};
 
 	keys {
@@ -108,6 +108,7 @@
 
 &mdio1 {
 	status = "okay";
+
 	pinctrl-0 = <&mdio1_pins>;
 	pinctrl-names = "default";
 	reset-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
@@ -191,6 +192,7 @@
 
 &blsp1_uart1 {
 	status = "okay";
+
 	pinctrl-0 = <&serial_0_pins>;
 	pinctrl-names = "default";
 };
@@ -222,11 +224,13 @@
 
 	nand@0 {
 		compatible = "spi-nand";
-		reg = <0>;
 		#address-cells = <1>;
 		#size-cells = <1>;
+		reg = <0>;
 
 		nand-ecc-engine = <&qpic_nand>;
+		nand-ecc-strength = <4>;
+		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
 
 		partitions {
@@ -236,13 +240,9 @@
 				compatible = "fixed-partitions";
 				label = "0:ART";
 				read-only;
-				#address-cells = <1>;
-				#size-cells = <1>;
 
 				nvmem-layout {
 					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
 
 					macaddr_dp2: macaddr@0 {
 						compatible = "mac-base";
@@ -334,12 +334,6 @@
 			"ath11k/QCN6122/hw1.0/m3_fw.mdt";
 
 	/* B3000 currently doesn't support passing bootargs */
-	/*boot-args = <					*/
-			/*       type:	0x1  PCIE0	*/
-			/*     length:	4		*/
-			/*      PD id:	3		*/
-			/* reset GPIO:	15		*/
-			/*   reserved:	0 0>;		*/
 
 	// IPQ5018
 	q6_wcss_pd1: pd-1 {

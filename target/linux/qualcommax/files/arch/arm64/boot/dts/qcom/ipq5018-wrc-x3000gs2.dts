@@ -24,8 +24,8 @@
 	};
 
 	chosen {
-		bootargs-append = " root=/dev/ubiblock0_1 coherent_pool=2M";
 		stdout-path = "serial0:115200n8";
+		bootargs-append = " root=/dev/ubiblock0_1";
 	};
 
 	keys {
@@ -158,15 +158,13 @@
 	pinctrl-names = "default";
 	status = "okay";
 
-	flash@0 {
+	nand@0 {
 		compatible = "spi-nand";
-		reg = <0>;
 		#address-cells = <1>;
 		#size-cells = <1>;
+		reg = <0>;
 
 		nand-ecc-engine = <&qpic_nand>;
-
-		/* strength=8 breaks NAND I/O, use 4 instead */
 		nand-ecc-strength = <4>;
 		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
@@ -177,8 +175,6 @@
 			partition-0-appsblenv {
 				compatible = "fixed-partitions";
 				label = "0:appsblenv";
-				#address-cells = <1>;
-				#size-cells = <1>;
 
 				partition@0 {
 					label = "env-data";
@@ -409,7 +405,7 @@
 			"ath11k/IPQ5018/hw1.0/m3_fw.mdt",
 			"ath11k/QCN6122/hw1.0/m3_fw.mdt";
 
-	boot-args = <0x2 4 2 18 0 0>; /* pcie:1, len:4, updid:2, reset:gpio18 */
+	boot-args = <0x2 4 2 18 0 0>; /* type, length, UPD ID, reset GPIO, reserved */
 
 	q6_wcss_pd1: pd-1 {
 		firmware-name = "ath11k/IPQ5018/hw1.0/q6_fw.mdt";
