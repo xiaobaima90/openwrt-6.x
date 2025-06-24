@@ -4,7 +4,7 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=nat46
 
 PKG_SOURCE_URL:=https://github.com/ayourtch/nat46.git
-PKG_SOURCE_DATE:=2024-08-12
+PKG_SOURCE_DATE:=2025-04-23
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=04923c51039e8ca270c6f1dde3f04f3b36958089
 PKG_MIRROR_HASH:=35d7987eed7f05e5f7d1d2e111a8c9f5d019ccf11eb839dfe0bd2e2c46b6199a
@@ -28,11 +28,6 @@ endif
 endef
 
 ifneq ($(CONFIG_PACKAGE_kmod-nat46),)
-
-define Build/InstallDev
-	$(INSTALL_DIR) $(STAGING_DIR)/usr/include/nat46
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/nat46/modules/*.h  $(STAGING_DIR)/usr/include/nat46/
-endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR)/usr/include/nat46

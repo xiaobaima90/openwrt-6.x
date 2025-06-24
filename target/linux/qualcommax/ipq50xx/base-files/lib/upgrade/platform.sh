@@ -27,52 +27,23 @@ remove_oem_ubi_volume() {
 	fi
 }
 
-linksys_mx_pre_upgrade() {
-	local setenv_script="/tmp/fw_env_upgrade"
-
-	CI_UBIPART="rootfs"
-	boot_part="$(fw_printenv -n boot_part)"
-	if [ -n "$UPGRADE_OPT_USE_CURR_PART" ]; then
-		if [ "$boot_part" -eq "2" ]; then
-			CI_KERNPART="alt_kernel"
-			CI_UBIPART="alt_rootfs"
-		fi
-	else
-		if [ "$boot_part" -eq "1" ]; then
-			echo "boot_part 2" >> $setenv_script
-			CI_KERNPART="alt_kernel"
-			CI_UBIPART="alt_rootfs"
-		else
-			echo "boot_part 1" >> $setenv_script
-		fi
-	fi
-
-	boot_part_ready="$(fw_printenv -n boot_part_ready)"
-	if [ "$boot_part_ready" -ne "3" ]; then
-		echo "boot_part_ready 3" >> $setenv_script
-	fi
-
-	auto_recovery="$(fw_printenv -n auto_recovery)"
-	if [ "$auto_recovery" != "yes" ]; then
-		echo "auto_recovery yes" >> $setenv_script
-	fi
-
-	if [ -f "$setenv_script" ]; then
-		fw_setenv -s $setenv_script || {
-			echo "failed to update U-Boot environment"
-			return 1
-		}
-	fi
-}
-
 platform_check_image() {
 	return 0;
 }
 
+platform_pre_upgrade() {
+	case "$(board_name)" in
+	xiaomi,ax6000)
+		xiaomi_initramfs_prepare
+		;;
+	esac
+}
+
 platform_do_upgrade() {
 	case "$(board_name)" in
-	elecom,wrc-x3000gs2)
-		local delay index
+	elecom,wrc-x3000gs2|\
+	iodata,wn-dax3000gr)
+		local delay
 
 		delay=$(fw_printenv bootdelay)
 		[ -z "$delay" ] || [ "$delay" -eq "0" ] && \
@@ -80,6 +51,7 @@ platform_do_upgrade() {
 
 		elecom_upgrade_prepare
 
+		remove_oem_ubi_volume bt_fw
 		remove_oem_ubi_volume ubi_rootfs
 		remove_oem_ubi_volume wifi_fw
 		nand_do_upgrade "$1"
@@ -93,6 +65,23 @@ platform_do_upgrade() {
 	linksys,spnmx56)
 		linksys_mx_pre_upgrade "$1"
 		remove_oem_ubi_volume squashfs
+		nand_do_upgrade "$1"
+		;;
+	xiaomi,ax6000)
+		# Make sure that UART is enabled
+		fw_setenv boot_wait on
+		fw_setenv uart_en 1
+
+		# Enforce single partition.
+		fw_setenv flag_boot_rootfs 0
+		fw_setenv flag_last_success 0
+		fw_setenv flag_boot_success 1
+		fw_setenv flag_try_sys1_failed 8
+		fw_setenv flag_try_sys2_failed 8
+
+		# Kernel and rootfs are placed in 2 different UBI
+		CI_KERN_UBIPART="ubi_kernel"
+		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
 	jdcloud,re-cs-03)

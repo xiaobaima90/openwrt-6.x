@@ -77,34 +77,6 @@
 	};
 };
 
-&tlmm {
-	mdio_pins: mdio-pins {
-		mdc {
-			pins = "gpio64";
-			function = "mdc";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-
-		mdio {
-			pins = "gpio65";
-			function = "mdio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-	};
-};
-
-&dp3 {
-	status = "okay";
-	phy-handle = <&qca8072_4>;
-	label = "lan";
-};
-
-&edma {
-	status = "okay";
-};
-
 &mdio {
 	status = "okay";
 
@@ -147,6 +119,7 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 		reg = <0>;
+
 		nand-ecc-strength = <4>;
 		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
@@ -161,4 +134,14 @@
 	status = "okay";
 	qcom,ath11k-fw-memory-mode = <1>;
 	qcom,ath11k-calibration-variant = "Netgear-WAX214";
+};
+
+&dp3 {
+	status = "okay";
+	phy-handle = <&qca8072_4>;
+	label = "lan";
+};
+
+&edma {
+	status = "okay";
 };
