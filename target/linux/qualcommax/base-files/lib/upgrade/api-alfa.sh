@@ -1,8 +1,6 @@
 . /lib/functions.sh
+. /lib/upgrade/common.sh
 
-# Flip active 'rootfs' partition in selected 'bootconfig' mtd partition
-# $1 target 'bootconfig' mtd partition name
-# $2 'offset' of the active rootfs flag byte
 alfa_bootconfig_rootfs_rotate() {
 	local part="$1"
 	local offs="$2"

@@ -72,7 +72,7 @@
 	leds {
 		compatible = "gpio-leds";
 
-		led_pwr: led-pwr {
+		led_pwr: pwr {
 			function = LED_FUNCTION_POWER;
 			gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
 			color = <LED_COLOR_ID_WHITE>;
@@ -249,44 +249,26 @@
 };
 
 &tlmm {
-	i2c_pins: i2c-pins {
-		mux {
-			pins = "gpio42", "gpio43";
-			function = "blsp1_i2c";
-			drive-strength = <8>;
-			bias-disable;
-		};
-	};
-
-	mdio_pins: mdio-pins {
-		mdc {
-			pins = "gpio68";
-			function = "mdc";
-			drive-strength = <16>;
-			bias-pull-up;
-		};
-
-		mdio {
-			pins = "gpio69";
-			function = "mdio";
-			drive-strength = <16>;
-			bias-pull-up;
-		};
+	fan_pins: fan-pins {
+		pins = "gpio64", "gpio66";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-disable;
+		output-high;
 	};
 
 	mdio_gpio_pins: mdio-gpio-pins {
-		mux {
-			pins = "gpio54", "gpio56";
-			function = "gpio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
+		pins = "gpio54", "gpio56";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-pull-up;
 	};
 
-	uniphy_pins: uniphy_pinmux {
+	uniphy_pins: uniphy-pins {
 		mux {
 			pins = "gpio60";
 			function = "rx2";
+			drive-strength = <8>;
 			bias-disable;
 		};
 
@@ -313,14 +295,6 @@
 			bias-pull-up;
 		};
 	};
-
-	fan_pins: fan-state {
-		pins = "gpio64", "gpio66";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-disable;
-		output-high;
-	};
 };
 
 &qusb_phy_0 {
@@ -336,6 +310,10 @@
 &qpic_nand {
 	status = "okay";
 
+	partitions {
+		status = "disabled";
+	};
+
 	nand@0 {
 		#address-cells = <1>;
 		#size-cells = <1>;
@@ -347,64 +325,66 @@
 
 		partitions {
 			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
 
 			partition@0 {
 				label = "0:sbl1";
-				reg = <0x0 0x60000>;
+				reg = <0x00000000 0x00060000>;
 				read-only;
 			};
 
 			partition@60000 {
 				label = "0:mibib";
-				reg = <0x00060000 0x40000>;
+				reg = <0x00060000 0x00040000>;
 				read-only;
 			};
 
 			partition@a0000 {
 				label = "0:qsee";
-				reg = <0x000a0000 0x1e0000>;
+				reg = <0x000a0000 0x001e0000>;
 				read-only;
 			};
 
 			partition@280000 {
 				label = "0:devcfg";
-				reg = <0x00280000 0x20000>;
+				reg = <0x00280000 0x00020000>;
 				read-only;
 			};
 
 			partition@2a0000 {
 				label = "0:apdp";
-				reg = <0x002a0000 0x20000>;
+				reg = <0x002a0000 0x00020000>;
 				read-only;
 			};
 
 			partition@2c0000 {
 				label = "0:rpm";
-				reg = <0x002c0000 0x40000>;
+				reg = <0x002c0000 0x00040000>;
 				read-only;
 			};
 
 			partition@300000 {
 				label = "0:cdt";
-				reg = <0x00300000 0x20000>;
+				reg = <0x00300000 0x00020000>;
 				read-only;
 			};
 
 			partition@320000 {
 				label = "0:appsbl";
-				reg = <0x00320000 0xc0000>;
+				reg = <0x00320000 0x000c0000>;
 				read-only;
 			};
 
 			partition@3e0000 {
 				label = "0:appsblenv";
-				reg = <0x003e0000 0x20000>;
+				reg = <0x003e0000 0x00020000>;
 			};
 
 			partition@400000 {
 				compatible = "linux,ubi";
 				label = "UBI_DEV";
-				reg = <0x00400000 0xfc00000>;
+				reg = <0x00400000 0x0fc00000>;
 			};
 		};
 	};
@@ -491,9 +471,12 @@
 		compatible = "qca,qca8337";
 		#address-cells = <1>;
 		#size-cells = <0>;
-		reg = <0x10>;
+		reg = <10>;
 
 		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
 			port@0 {
 				reg = <0>;
 				label = "cpu";

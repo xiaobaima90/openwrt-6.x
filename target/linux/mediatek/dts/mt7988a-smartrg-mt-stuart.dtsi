@@ -152,11 +152,6 @@
 		interrupt-parent = <&pio>;
 		interrupts = <21 IRQ_TYPE_EDGE_FALLING>;
 		pulses-per-revolution = <2>;
-<<<<<<< HEAD
-
-		status = "okay";
-=======
->>>>>>> immortalwrt/master
 	};
 };
 
@@ -738,8 +733,6 @@
 			groups = "uart2";
 		};
 	};
-
-
 };
 
 &pwm {

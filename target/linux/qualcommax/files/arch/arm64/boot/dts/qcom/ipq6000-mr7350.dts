@@ -71,45 +71,15 @@
 
 &tlmm {
 	hsuart_pins: hsuart-pins {
-		mux {
-			pins = "gpio69", "gpio70", "gpio71", "gpio72";
-			function = "blsp1_uart";
-			drive-strength = <8>;
-			bias-disable;
-		};
-	};
-
-	i2c_pins: i2c-pins {
-		mux {
-			pins = "gpio42", "gpio43";
-			function = "blsp2_i2c";
-			drive-strength = <8>;
-			bias-pull-down;
-		};
-	};
-
-	mdio_pins: mdio-state {
-		mdc-pins {
-			pins = "gpio64";
-			function = "mdc";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-
-		mdio-pins {
-			pins = "gpio65";
-			function = "mdio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
+		pins = "gpio69", "gpio70", "gpio71", "gpio72";
+		function = "blsp1_uart";
+		drive-strength = <8>;
+		bias-disable;
 	};
 };
 
 &blsp1_i2c3 {
 	status = "okay";
-
-	pinctrl-0 = <&i2c_pins>;
-	pinctrl-names = "default";
 
 	led-controller@62 {
 		compatible = "nxp,pca9633";
@@ -172,13 +142,20 @@
 
 		partitions {
 			compatible = "qcom,smem-part";
+			#address-cells = <1>;
+			#size-cells = <1>;
 
 			partition-0-devinfo {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
 				label = "devinfo";
 				read-only;
 
 				nvmem-layout {
 					compatible = "ascii-eq-delim-env";
+					#address-cells = <1>;
+					#size-cells = <1>;
 
 					hw_mac_addr: hw_mac_addr {
 						compatible = "mac-base";
@@ -275,8 +252,10 @@
 	};
 };
 
-&edma {
+&wifi {
 	status = "okay";
+	qcom,ath11k-fw-memory-mode = <1>;
+	qcom,ath11k-calibration-variant = "Linksys-MR7350";
 };
 
 &dp1 {
@@ -319,8 +298,6 @@
 	nvmem-cell-names = "mac-address";
 };
 
-&wifi {
+&edma {
 	status = "okay";
-	qcom,ath11k-fw-memory-mode = <1>;
-	qcom,ath11k-calibration-variant = "Linksys-MR7350";
 };

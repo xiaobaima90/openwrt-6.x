@@ -211,11 +211,7 @@
 +	};
 +};
 +
-<<<<<<< HEAD
-+&pinctrl {
-=======
 +&pio {
->>>>>>> immortalwrt/master
 +	spi_flash_pins: spi0-pins-func-1 {
 +		mux {
 +			function = "flash";

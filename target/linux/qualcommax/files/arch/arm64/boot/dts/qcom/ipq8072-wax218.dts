@@ -27,10 +27,6 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
-		/*
-		 * Netgear's U-Boot adds "ubi.mtd=rootfs root=mtd:ubi_rootfs"
-		 * That fails to create a UBI block device, so add it here.
-		*/
 		bootargs-append = " ubi.block=0,rootfs root=/dev/ubiblock0_1";
 	};
 
@@ -52,14 +48,14 @@
 		sck-gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>;
 		mosi-gpios = <&tlmm 19 GPIO_ACTIVE_HIGH>;
 
-		led_gpio: led_gpio@0 {
+		led_gpio: gpio {
 			compatible = "fairchild,74hc595";
 			reg = <0>;
 			gpio-controller;
 			#gpio-cells = <2>;
-			registers-number = <1>;
-			enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+			registers-number = <2>;
 			spi-max-frequency = <1000000>;
+			enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
 		};
 	};
 
@@ -110,24 +106,6 @@
 	};
 };
 
-&tlmm {
-	mdio_pins: mdio-pins {
-		mdc {
-			pins = "gpio68";
-			function = "mdc";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-
-		mdio {
-			pins = "gpio69";
-			function = "mdio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-	};
-};
-
 &mdio {
 	status = "okay";
 
@@ -165,15 +143,20 @@
 
 			partition-0-appsblenv {
 				compatible = "fixed-partitions";
+				#address-cells = <1>;
+				#size-cells = <1>;
+
 				label = "0:appsblenv";
 				read-only;
 
 				partition@0 {
 					label = "env-data";
-					reg = <0x0 0x40000>;
+					reg = <0x00000000 0x00040000>;
 
 					nvmem-layout {
 						compatible = "u-boot,env";
+						#address-cells = <1>;
+						#size-cells = <1>;
 
 						macaddr_ubootenv_ethaddr: ethaddr {};
 					};

@@ -68,7 +68,7 @@
 
    ```bash
    cd openwrt-6.x
-   git fetch && git reset --hard origin/kernel-6.12
+   git fetch && git reset --hard origin/k6.12-nss
    ./scripts/feeds update -a && ./scripts/feeds install -a
    make menuconfig
    make V=s -j$(nproc)

@@ -14,11 +14,7 @@ Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 
 --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-<<<<<<< HEAD
-@@ -718,7 +718,7 @@
-=======
 @@ -720,7 +720,7 @@
->>>>>>> immortalwrt/master
  			status = "disabled";
  		};
  
@@ -27,11 +23,7 @@ Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
  			compatible = "qcom,ipq9574-qusb2-phy";
  			reg = <0x0007b000 0x180>;
  			#phy-cells = <0>;
-<<<<<<< HEAD
-@@ -732,7 +732,7 @@
-=======
 @@ -734,7 +734,7 @@
->>>>>>> immortalwrt/master
  			status = "disabled";
  		};
  

@@ -76,8 +76,6 @@
 		};
 	};
 
-<<<<<<< HEAD
-=======
 	fan: pwm-fan {
 		compatible = "pwm-fan";
 		/* cooling level (0, 1, 2, 3) : (0% duty, 30% duty, 50% duty, 100% duty) */
@@ -89,7 +87,6 @@
 		#thermal-sensor-cells = <1>;
 	};
 
->>>>>>> immortalwrt/master
 	reg_1p8v: regulator-1p8v {
 		compatible = "regulator-fixed";
 		regulator-name = "fixed-1.8V";
@@ -456,22 +453,6 @@
 			groups = "spi0", "spi0_wp_hold";
 		};
 	};
-<<<<<<< HEAD
-
-	fan: pwm-fan {
-		compatible = "pwm-fan";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwm0_pins>;
-		pwms = <&pwm 0 50000>;
-		/* cooling level (0, 1, 2, 3) : (0% duty, 30% duty, 50% duty, 100% duty) */
-		cooling-levels = <0 80 128 255>;
-		#cooling-cells = <2>;
-		#thermal-sensor-cells = <1>;
-
-		status = "okay";
-	};
-=======
->>>>>>> immortalwrt/master
 };
 
 &pwm {

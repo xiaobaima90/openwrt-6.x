@@ -2,13 +2,7 @@
 
 /dts-v1/;
 
-<<<<<<< HEAD
-#include <dt-bindings/leds/common.h>
-
-#include "mt7981b.dtsi"
-=======
 #include "mt7981b-cudy-wr3000-nand.dtsi"
->>>>>>> immortalwrt/master
 
 / {
 	model = "Cudy WR3000S v1";

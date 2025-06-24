@@ -67,11 +67,6 @@
 		/* cooling level (0, 1, 2) : (0% duty, 50% duty, 100% duty) */
 		cooling-levels = <0 128 255>;
 		pwms = <&pwm 1 40000 0>;
-<<<<<<< HEAD
-
-		status = "okay";
-=======
->>>>>>> immortalwrt/master
 	};
 };
 
@@ -164,13 +159,6 @@
 	};
 };
 
-<<<<<<< HEAD
-&serial1 {
-	status = "okay";
-};
-
-=======
->>>>>>> immortalwrt/master
 &pwm {
 	status = "okay";
 };
