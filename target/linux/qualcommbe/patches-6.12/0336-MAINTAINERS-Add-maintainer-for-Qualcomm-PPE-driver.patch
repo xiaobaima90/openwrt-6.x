@@ -13,7 +13,11 @@ Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
+<<<<<<< HEAD
 @@ -19131,6 +19131,14 @@ S:	Maintained
+=======
+@@ -19133,6 +19133,14 @@ S:	Maintained
+>>>>>>> immortalwrt/master
  F:	Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
  F:	drivers/mtd/nand/raw/qcom_nandc.c
  

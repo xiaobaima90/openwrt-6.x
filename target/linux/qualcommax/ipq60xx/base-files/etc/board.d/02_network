@@ -19,6 +19,9 @@ ipq60xx_setup_interfaces()
 	alfa-network,ap120c-ax)
 		ucidef_set_interfaces_lan_wan "lan" "wan"
 		;;
+	alfa-network,ap120c-ax)
+		ucidef_set_interfaces_lan_wan "lan" "wan"
+		;;
 	cambiumnetworks,xe3-4)
 		ucidef_set_interface_lan "lan1 lan2" "dhcp"
 		;;

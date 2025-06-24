@@ -24,7 +24,11 @@ Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
  			#address-cells = <1>;
  			#size-cells = <0>;
  			clocks = <&gcc GCC_MDIO_AHB_CLK>;
+<<<<<<< HEAD
 @@ -412,6 +414,22 @@
+=======
+@@ -414,6 +416,22 @@
+>>>>>>> immortalwrt/master
  			interrupt-controller;
  			#interrupt-cells = <2>;
  

@@ -4,6 +4,7 @@ CFG=/etc/board.json
 
 . /usr/share/libubox/jshn.sh
 . /lib/functions/ipv4.sh
+. /lib/functions/ipv4.sh
 
 [ -s $CFG ] || /bin/board_detect || exit 1
 [ -s /etc/config/network -a -s /etc/config/system ] && exit 0
@@ -43,6 +44,7 @@ generate_static_network() {
 		set network.loopback='interface'
 		set network.loopback.device='lo'
 		set network.loopback.proto='static'
+		add_list network.loopback.ipaddr='127.0.0.1/8'
 		add_list network.loopback.ipaddr='127.0.0.1/8'
 	EOF
 		[ -e /proc/sys/net/ipv6 ] && {
@@ -161,6 +163,7 @@ generate_network() {
 	case "$protocol" in
 		static)
 			local ipad netm prefix
+			local ipad netm prefix
 			case "$1" in
 				lan) ipad=${ipaddr:-"192.168.1.1"} ;;
 				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
@@ -169,9 +172,12 @@ generate_network() {
 			netm=${netmask:-"255.255.255.0"}
 			str2ip netm "$netm"
 			netmask2prefix prefix "$netm"
+			str2ip netm "$netm"
+			netmask2prefix prefix "$netm"
 
 			uci -q batch <<-EOF
 				set network.$1.proto='static'
+				add_list network.$1.ipaddr='$ipad/$prefix'
 				add_list network.$1.ipaddr='$ipad/$prefix'
 			EOF
 			[ -e /proc/sys/net/ipv6 ] && uci set network.$1.ip6assign='60'

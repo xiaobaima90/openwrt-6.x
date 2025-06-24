@@ -67,8 +67,11 @@
 		/* cooling level (0, 1, 2) : (0% duty, 50% duty, 100% duty) */
 		cooling-levels = <0 128 255>;
 		pwms = <&pwm 1 40000 0>;
+<<<<<<< HEAD
 
 		status = "okay";
+=======
+>>>>>>> immortalwrt/master
 	};
 };
 
@@ -81,8 +84,6 @@
 };
 
 &mdio_bus {
-	#address-cells = <1>;
-	#size-cells = <0>;
 	reset-gpios = <&pio 72 GPIO_ACTIVE_LOW>;
 	reset-assert-us = <100000>;
 	reset-deassert-us = <100000>;
@@ -163,11 +164,18 @@
 	};
 };
 
+<<<<<<< HEAD
 &serial1 {
 	status = "okay";
 };
 
+=======
+>>>>>>> immortalwrt/master
 &pwm {
+	status = "okay";
+};
+
+&serial1 {
 	status = "okay";
 };
 
