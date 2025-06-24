@@ -23,16 +23,16 @@
 
 ## 使用方法
 
-### [云编译](https://github.com/breeze303/openwrt-ci)
+### [云编译1](https://github.com/breeze303/openwrt-ci) [云编译2](https://github.com/ZqinKing/wrt_release) [云编译3](https://github.com/laipeng668/openwrt-ci-roc) [云编译4](https://github.com/VIKINGYFY/OpenWRT-CI)
 
 ### 本地编译
 
 - **不要用 `root` 用户进行编译⚠**
 - 国内用户编译前最好准备好梯子
-- 默认登陆IP 192.168.1.1 密码 password
+- 默认登陆IP 192.168.1.1 密码 none
 
 
-1. 首先装好 Linux 系统， Ubuntu 20.04 LTS
+1. 首先装好 Linux 系统， Ubuntu 22.04 LTS
 
 2. 安装编译依赖
 
