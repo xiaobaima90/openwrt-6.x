@@ -96,6 +96,15 @@ set_wifi_def_cfg() {
 	case "$band" in
 	'5g')
 		channel=149
+		case "${board_name}" in
+		    jdcloud,re-ss-01)
+		        case "$htmode" in
+		            'VHT160' | 'HE160')
+		                htmode="${htmode%160}80"
+		                ;;
+		        esac
+		        ;;
+		esac
 		[ "$htmode" = 'HE160' ] || [ "$htmode" = 'VHT160' ] && channel=44
 		if [ -z "$FIRST_5G" ]; then
 			[ "$RADIO_NUM" -gt 2 ] && ssid="${BASE_SSID}-5G_1" || ssid="${BASE_SSID}-5G"
