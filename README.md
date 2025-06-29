@@ -1,8 +1,8 @@
 # 适用于 IPQ系列设备的 OpenWrt 源码仓库
 
 ## 说明
->对于以前IPQ系列想要使用OpenWrt系统只能放弃部分NSS功能，亦或者使用相对老旧的内核，在开源社区的努力下完善了这部分的支持  
->其中本库中融合了[JiaY-shi](https://github.com/JiaY-shi/openwrt)、[qosmio](https://github.com/qosmio/openwrt-ipq)两位大佬NSS支持的代码实现了这一功能，以及使用了[immortalwrt](https://github.com/immortalwrt)的luci、packages作为插件的支持,在此感谢大佬们的付出
+>对于以前IPQ系列想要使用OpenWrt系统只能放弃部分NSS功能，亦或者使用相对老旧的内核，在开源社区的努力下完善了这部分的支持。
+>其中本仓库中融合了[JiaY-shi](https://github.com/JiaY-shi)和[qosmio](https://github.com/qosmio)两位大佬NSS支持的代码实现了这一功能，以及使用了[ImmortalWrt](https://github.com/immortalwrt)的LuCI和Packages作为插件的支持，在此感谢大佬们的付出！
 
 目前已实现功能
 | Target  | NSS NAT | 2.4G WiFi <br />`NSS Offload` | 5G WiFi <br />`NSS Offload` |
@@ -32,7 +32,7 @@
 - 默认登陆IP 192.168.1.1 密码 none
 
 
-1. 首先装好 Linux 系统， Ubuntu 22.04 LTS
+1. 首先装好 Linux 系统，推荐使用Ubuntu 22.04 LTS
 
 2. 安装编译依赖
 
@@ -50,14 +50,13 @@
 3. 下载源代码，更新 feeds 并选择配置
 
    ```bash
-   git clone --depth 1 --single-branch https://github.com/LiBwrt-op/openwrt-6.x.git
-   cd openwrt-6.x
+   git clone --depth 1 --single-branch https://github.com/LiBwrt-op/openwrt-6.x.git libwrt
+   cd libwrt
    ./scripts/feeds update -a && ./scripts/feeds install -a
    make menuconfig
    ```
 
-4. 下载 dl 库，编译固件
-（-j 后面是线程数，为便于排除错误推荐用单线程）
+4. 下载 dl 库，编译固件 （-j 后面是线程数，为便于排除错误推荐用单线程）
 
    ```bash
    make download -j$(nproc)
@@ -67,11 +66,11 @@
 5. 二次编译：
 
    ```bash
-   cd openwrt-6.x
+   cd libwrt
    git fetch && git reset --hard origin/k6.12-nss
    ./scripts/feeds update -a && ./scripts/feeds install -a
-   make menuconfig
-   make V=s -j$(nproc)
+   make defconfig
+   make -j$(nproc) V=s 
    ```
 
 6. 如果需要重新配置：
@@ -79,7 +78,7 @@
    ```bash
    rm -rf .config
    make menuconfig
-   make V=s -j$(nproc)
+   make -j$(nproc) V=s 
    ```
 
 7. 编译完成后输出路径：bin/targets
