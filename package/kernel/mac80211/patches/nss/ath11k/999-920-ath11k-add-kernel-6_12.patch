@@ -130,7 +130,7 @@
  {
  	struct ath11k *ar = ab->pdevs[radio_id].ar;
  	struct nss_wifili_pdev_init_msg *pdevmsg;
-@@ -4684,7 +4684,7 @@ dealloc:
+@@ -4686,7 +4686,7 @@ dealloc:
  /* TODO : Check if start, reset and stop messages can be done using single function as
   * body is similar, having it now for clarity */
  
@@ -139,7 +139,7 @@
  {
  	struct nss_wifili_msg *wlmsg = NULL;
  	nss_wifili_msg_callback_t msg_cb;
-@@ -4849,7 +4849,7 @@ free:
+@@ -4851,7 +4851,7 @@ free:
  	return ret;
  }
  
