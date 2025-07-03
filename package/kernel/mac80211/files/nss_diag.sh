@@ -15,21 +15,21 @@ if [ -t 1 ]; then
 fi
 
 # 获取系统信息
-device=$(jsonfilter -e '@.model.name' < /etc/board.json || echo "N/A")
-kernel=$(uname -r 2>/dev/null || echo "N/A")
-cpu_mode=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo "N/A")
-system=$(grep -o "^DISTRIB_DESCRIPTION=.*" /etc/openwrt_release | cut -d "'" -f 2 || echo "N/A")
+device="$(jsonfilter -e '@.model.name' < /etc/board.json || echo "N/A")"
+kernel="$(uname -r 2>/dev/null || echo "N/A")"
+cpu_mode="$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo "N/A")"
+system="$(cat /etc/openwrt_release 2>/dev/null | awk -F "'" '/DESCRIPTION/ {print $2}' || echo "N/A")"
 
 # 获取固件版本信息
-nss_fw=$(grep -m 1 -hao 'NSS.[^[:cntrl:]]*' /lib/firmware/qca-nss0.bin 2>/dev/null || echo "N/A")
-mac80211_fw=$(awk '/version/{print $NF;exit}' /lib/modules/*/compat.ko 2>/dev/null || echo "N/A")
+nss_fw="$(grep -m1 -hao 'NSS.[^[:cntrl:]]*' /lib/firmware/qca-nss0.bin 2>/dev/null || echo "N/A")"
+mac80211_fw="$(awk '/version/{print $NF;exit}' /lib/modules/*/compat.ko 2>/dev/null || echo "N/A")"
 
 # 获取ATH11K固件信息
 ath11k_fw=""
 for file in /lib/firmware/IPQ*/q6_fw.b04 /lib/firmware/ath11k/QCN*/hw*/amss.bin; do
 	[ -f "$file" ] || continue
-	platform=$(echo "$file" | grep -Eo 'IPQ[0-9]+|QCN[0-9]+')
-	version=$(grep -m 1 -hao 'WLAN.[^[:cntrl:]]*SILICONZ-[0-9]' "$file")
+	platform="$(echo "$file" | grep -Eo 'IPQ[0-9]+|QCN[0-9]+')"
+	version="$(grep -m1 -hao 'WLAN.[^[:cntrl:]]*SILICONZ-[0-9]' "$file")"
 	[ -n "$version" ] && ath11k_fw="${ath11k_fw}${platform} ${version}\n            "
 done
 ath11k_fw=${ath11k_fw:-"N/A"}
