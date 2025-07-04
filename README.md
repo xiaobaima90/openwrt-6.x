@@ -106,7 +106,3 @@
 ### 如果你喜欢这个项目的话别忘了点个Star⭐
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/LiBwrt-op/openwrt-6.x.svg?variant=adaptive)](https://starchart.cc/LiBwrt-op/openwrt-6.x)
-
-<a href="#readme">
-<img src="https://img.shields.io/badge/-返回顶部-FFFFFF.svg" title="返回顶部" align="left"/>
-</a>
