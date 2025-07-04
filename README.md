@@ -1,23 +1,43 @@
 # 适用于 IPQ系列设备的 OpenWrt 源码仓库
 
 ## 说明
->对于以前IPQ系列想要使用OpenWrt系统只能放弃部分NSS功能，亦或者使用相对老旧的内核，在开源社区的努力下完善了这部分的支持。
->其中本仓库中融合了[JiaY-shi](https://github.com/JiaY-shi)和[qosmio](https://github.com/qosmio)两位大佬NSS支持的代码实现了这一功能，以及使用了[ImmortalWrt](https://github.com/immortalwrt)的LuCI和Packages作为插件的支持，在此感谢大佬们的付出！
+>对于以前IPQ系列想要使用OpenWrt系统只能放弃部分NSS功能，亦或者使用相对老旧的内核，在开源社区的努力下完善了这部分的支持。其中本仓库中融合了[JiaY-shi](https://github.com/JiaY-shi)和[qosmio](https://github.com/qosmio)两位大佬NSS支持的代码实现了这一功能，以及使用了[ImmortalWrt](https://github.com/immortalwrt)的LuCI和Packages作为插件的支持，在此感谢大佬们的付出！
 
-目前已实现功能
-| Target  | NSS NAT | 2.4G WiFi <br />`NSS Offload` | 5G WiFi <br />`NSS Offload` |
+| Target  | NSS <br />`Matrix` | 2.4G WiFi <br />`NSS Offload` | 5G WiFi <br />`NSS Offload` |
 | :-:     | :-:     | :-:       | :-:     |
 | IPQ807X | ✅      | ✅       | ✅      |
 | IPQ60XX | ✅      | ✅       | ✅      |
 | IPQ50XX | ❌      |❌        |❌       |
 
+## NSS功能支持矩阵
+
+|   功能    | IPQ807x | IPQ60xx |   功能          | IPQ807x | IPQ60xx |
+| --------- | :-----: | :-----: | --------------- | :-----: | :-----: |
+| TUNIPIP6  |   ✅    |   ✅    | RMNET           |  🟨<sup><a href="#fn1">1</a></sup>  |  ⛔<sup><a href="#fn2">2</a></sup>  |
+| PPPOE     |   ✅    |   ✅    | MIRROR          |   ✅    |   ✅    |
+| L2TPV2    |   ✅    |   ✅    | WIFI (AP/STA)   |   ✅    |   ✅    |
+| BRIDGE    |   ✅    |   ✅    | WIFI (WDS)      |  🟨<sup><a href="#fn1">1</a></sup>  |  🟨<sup><a href="#fn1">1</a></sup>  |
+| VLAN      |   ✅    |   ✅    | WIFI (MESH)     |  🟨<sup><a href="#fn1">1</a></sup>  |  🟨<sup><a href="#fn1">1</a></sup>  |
+| MAP_T     |   ✅    |   ✅    | WIFI (AP VLAN)  |  ⚠️<sup><a href="#fn4">4</a></sup>  |  ⚠️<sup><a href="#fn4">4</a></sup>  |
+| TUN6RD    |   ✅    |   ✅    | IPSEC           |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+| GRE       |   ✅    |   ✅    | PVXLAN          |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+| PPTP      |   ✅    |   ✅    | CLMAP           |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+| IGS       |   ✅    |   ✅    | TLS             |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+| VXLAN     |   ✅    |   ✅    | CAPWAP          |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+| MATCH     |   ✅    |   ✅    | DTLS            |   ❌<sup><a href="#fn3">3</a></sup>  |   ❌<sup><a href="#fn3">3</a></sup>  |
+
+<a id="fn1"></a><sup>1</sup> 🟨 需要**NSS固件11.4版本​**（CONFIG_NSS_FIRMWARE_VERSION_11_4=y）  
+<a id="fn2"></a><sup>2</sup> ⛔ 在该平台上不可用  
+<a id="fn3"></a><sup>3</sup> ❌ ​在NSS固件(11.4–12.5)版本中不可用  
+<a id="fn4"></a><sup>4</sup> ⚠️ ​在ath11k驱动程序中存在故障​  
+
 ## Wiki
-- [什么是NSS?](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#whats-nss)
+- [什么是NSS？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#whats-nss)
 - [OpenWrt如何“分载”流量？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#how-does-openwrt-offload-traffic)
 - [NSS与OpenWrt的“分载”选项有何不同？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#how-is-nss-different-from-openwrts-offloading-options)
-- [我需要NSS吗?](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#do-i-need-nss)
+- [我需要NSS吗？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#do-i-need-nss)
 - [我的设备支持NSS吗？](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#ok-i-want-nss-does-my-device-support-it)
-- [重要提示](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#important-note)
+- [重要提示！](https://github.com/qosmio/openwrt-ipq/blob/qualcommax-6.x-nss-wifi/README.md#important-note)
 
 ---
 
