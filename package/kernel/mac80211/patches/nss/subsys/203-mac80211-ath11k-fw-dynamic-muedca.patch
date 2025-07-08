@@ -111,7 +111,7 @@ Signed-off-by: Muna Sinada <msinada@codeaurora.org>
  	__NL80211_ATTR_AFTER_LAST,
 --- a/net/mac80211/mlme.c
 +++ b/net/mac80211/mlme.c
-@@ -10464,3 +10464,15 @@ int ieee80211_mgd_assoc_ml_reconf(struct
+@@ -10465,3 +10465,15 @@ int ieee80211_mgd_assoc_ml_reconf(struct
  	kfree(data);
  	return err;
  }
